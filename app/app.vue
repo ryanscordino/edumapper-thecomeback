@@ -61,6 +61,19 @@ const handleSchoolEdit = () => {
 const handleSchoolChange = (newSchoolName: string) => {
   schoolName.value = newSchoolName
 }
+
+// SEO and Social Media Meta Tags
+
+
+useSeoMeta({
+  title: 'EduMapper - Estimez vos chances d\'admission',
+  description: 'Découvrez vos chances d\'admission dans les établissements supérieurs. Outil gratuit pour estimer vos possibilités d\'admission selon votre profil.',
+  ogTitle: 'EduMapper - Estimez vos chances d\'admission',
+  ogDescription: 'Découvrez vos chances d\'admission dans les établissements supérieurs. Outil gratuit pour estimer vos possibilités d\'admission selon votre profil.',
+  ogImage: '/light.png',
+  ogUrl: 'https://edumapper.com',
+
+})
 </script>
 
 <template>
@@ -90,6 +103,7 @@ const handleSchoolChange = (newSchoolName: string) => {
       </main>
     </div>
   </UApp>
+
 </template>
 
 <style scoped>
