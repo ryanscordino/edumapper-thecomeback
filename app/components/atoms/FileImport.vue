@@ -28,7 +28,7 @@
                 <canvas ref="confettiCanvas" class="fixed top-0 left-0 w-full h-full pointer-events-none"></canvas>
             </div>
         </div>
-        <div class="text-center text-sm flex items-center justify-center gap-1.5 text-gray-600">
+        <div class="text-left text-sm flex items-center justify-center gap-1.5 text-gray-600">
             <Icon name="material-symbols:info" /> Transmettre ta fiche Avenir permet d'affiner le résultat de tes
             chances
             d'admission
