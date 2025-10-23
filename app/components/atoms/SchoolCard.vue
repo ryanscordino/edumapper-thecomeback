@@ -17,21 +17,24 @@
         Modifier
       </button>
     </div>
-    <div v-if="isEditing" id="school-popover" tabindex="-1"
-      class="absolute right-0 mt-2 w-80 bg-white border rounded shadow z-50">
-      <div class="p-3">
-        <div class="text-sm font-medium mb-2 text-gray-900">Choisir un lycée</div>
-        <div class="max-h-64 overflow-auto">
-          <button v-for="school in props.schools" :key="school" @click="() => selectAndReload(school)"
-            class="w-full text-left px-2 py-2 hover:bg-gray-100 text-gray-900 rounded">
-            {{ school }}
-          </button>
-        </div>
-        <div class="mt-3 text-right">
-          <button @click="() => (isEditing = false)" class="px-3 py-1 rounded bg-gray-200 text-gray-900">Fermer</button>
+    <Transition name="popover">
+      <div v-if="isEditing" id="school-popover" tabindex="-1"
+        class="absolute right-0 mt-2 w-80 bg-white border rounded shadow z-50">
+        <div class="p-3">
+          <div class="text-sm font-medium mb-2 text-gray-900">Choisir un lycée</div>
+          <div class="max-h-64 overflow-auto">
+            <button v-for="school in props.schools" :key="school" @click="() => selectAndReload(school)"
+              class="w-full text-left px-2 py-2 hover:bg-gray-100 text-gray-900 rounded transition-colors">
+              {{ school }}
+            </button>
+          </div>
+          <div class="mt-3 text-right">
+            <button @click="() => (isEditing = false)"
+              class="px-3 py-1 rounded bg-gray-200 text-gray-900">Fermer</button>
+          </div>
         </div>
       </div>
-    </div>
+    </Transition>
   </div>
 </template>
 
@@ -64,3 +67,23 @@ const selectAndReload = (school: string) => {
   isEditing.value = false
 }
 </script>
+
+<style scoped>
+.popover-enter-active {
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.popover-leave-active {
+  transition: all 0.2s ease;
+}
+
+.popover-enter-from {
+  opacity: 0;
+  transform: translateY(-10px) scale(0.95);
+}
+
+.popover-leave-to {
+  opacity: 0;
+  transform: translateY(-10px) scale(0.95);
+}
+</style>

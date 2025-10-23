@@ -4,21 +4,27 @@
             <div class="flex flex-col gap-3">
                 <div class="flex flex-col items-center justify-center gap-3">
                     <input ref="fileInput" type="file" class="hidden" @change="onFileChange" />
-                    <button @click="pickFile" type="button" class="px-3 py-8 text-center flex items-center gap-2">
+                    <button @click="pickFile" type="button"
+                        class="px-3 py-8 text-center flex items-center gap-2 transition-all duration-300">
                         <Icon name="material-symbols:document-scanner-sharp" />
                         <span>{{ imported ? 'Fichier importé ! Regarde le résultat en cliquant sur suivant !'
                             : 'Joindre ma fiche avenir pour cette formation' }}</span>
                     </button>
-                    <div v-if="fileName && !imported" class="text-sm text-gray-800">{{ fileName }}</div>
+                    <Transition name="fade">
+                        <div v-if="fileName && !imported" class="text-sm text-gray-800">{{ fileName }}</div>
+                    </Transition>
                 </div>
 
-                <div class="flex gap-2 mt-3 justify-center">
-                    <button v-if="fileName && !imported" @click="importFile"
-                        class="px-3 py-2 rounded bg-stone-950 text-white">
-                        Importer
-                    </button>
-                    <button v-if="fileName" @click="clear" class="px-3 py-2 rounded border text-sm">Supprimer</button>
-                </div>
+                <Transition name="slide-fade">
+                    <div v-if="fileName && !imported" class="flex gap-2 mt-3 justify-center">
+                        <button @click="importFile"
+                            class="px-3 py-2 rounded bg-stone-950 text-white transition-all hover:scale-105">
+                            Importer
+                        </button>
+                        <button v-if="fileName" @click="clear"
+                            class="px-3 py-2 rounded border text-sm transition-all hover:scale-105">Supprimer</button>
+                    </div>
+                </Transition>
                 <canvas ref="confettiCanvas" class="fixed top-0 left-0 w-full h-full pointer-events-none"></canvas>
             </div>
         </div>
@@ -144,3 +150,41 @@ const handleNoFile = () => {
     emit('noFile')
 }
 </script>
+
+<style scoped>
+.slide-fade-enter-active {
+    transition: all 0.3s ease-out;
+}
+
+.slide-fade-leave-active {
+    transition: all 0.2s ease-in;
+}
+
+.slide-fade-enter-from {
+    transform: translateY(-10px);
+    opacity: 0;
+}
+
+.slide-fade-leave-to {
+    transform: translateY(-10px);
+    opacity: 0;
+}
+
+.fade-enter-active {
+    transition: all 0.3s ease-out;
+}
+
+.fade-leave-active {
+    transition: all 0.2s ease-in;
+}
+
+.fade-enter-from {
+    opacity: 0;
+    transform: scale(0.95);
+}
+
+.fade-leave-to {
+    opacity: 0;
+    transform: scale(0.95);
+}
+</style>

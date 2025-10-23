@@ -68,20 +68,65 @@ const handleSchoolChange = (newSchoolName: string) => {
     <div class="min-h-screen">
       <Header />
       <main class="max-w-3xl mx-auto px-4 text-center">
-        <div v-if="schoolPending || !isRandomSchoolSet" class="flex items-center justify-center py-20">
-          <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
-        </div>
-        <CookingStep1 v-else-if="showStep1 && schoolName" :schoolName="schoolName" :classesLevel="classes?.data || []"
-          :bacTypes="bacTypes?.data || []" :specialities="specialities?.data || []" :taskDone="false"
-          :schools="school?.data || []" @stepComplete="handleStepComplete" @schoolChange="handleSchoolChange" />
-        <div v-else-if="!schoolName">
-          <p>Nous rencontrons un problème</p>
-          <p>Veuillez réessayer plus tard</p>
-        </div>
-        <CookingStep2 v-if="showStep2" :schoolName="stepData?.schoolName || ''" :taskDone="false"
-          :schools="school?.data || []" @next="handleStep2Next" @noFile="handleStep2NoFile" />
-        <CookingStep3 v-if="showStep3" />
+        <Transition name="fade" mode="out-in">
+          <div v-if="schoolPending || !isRandomSchoolSet" key="loading" class="flex items-center justify-center py-20">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
+          </div>
+          <CookingStep1 v-else-if="showStep1 && schoolName" key="step1" :schoolName="schoolName"
+            :classesLevel="classes?.data || []" :bacTypes="bacTypes?.data || []"
+            :specialities="specialities?.data || []" :taskDone="false" :schools="school?.data || []"
+            @stepComplete="handleStepComplete" @schoolChange="handleSchoolChange" />
+          <div v-else-if="!schoolName" key="error">
+            <p>Nous rencontrons un problème</p>
+            <p>Veuillez réessayer plus tard</p>
+          </div>
+        </Transition>
+        <Transition name="slide" mode="out-in">
+          <CookingStep2 v-if="showStep2" key="step2" :schoolName="stepData?.schoolName || ''" :taskDone="false"
+            :schools="school?.data || []" @next="handleStep2Next" @noFile="handleStep2NoFile" />
+        </Transition>
+        <Transition name="slide" mode="out-in">
+          <CookingStep3 v-if="showStep3" key="step3" />
+        </Transition>
       </main>
     </div>
   </UApp>
 </template>
+
+<style scoped>
+.slide-enter-active {
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.slide-leave-active {
+  transition: all 0.3s ease;
+}
+
+.slide-enter-from {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.slide-leave-to {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+.fade-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.fade-leave-active {
+  transition: all 0.2s ease-in;
+}
+
+.fade-enter-from {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+.fade-leave-to {
+  opacity: 0;
+  transform: scale(0.95);
+}
+</style>
