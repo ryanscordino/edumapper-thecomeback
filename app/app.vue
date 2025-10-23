@@ -67,7 +67,7 @@ const handleSchoolChange = (newSchoolName: string) => {
   <UApp>
     <div class="min-h-screen">
       <Header />
-      <main class="max-w-3xl mx-auto px-4 text-center">
+      <main class="max-w-3xl mx-auto px-4 text-center overflow-visible">
         <Transition name="fade" mode="out-in">
           <div v-if="schoolPending || !isRandomSchoolSet" key="loading" class="flex items-center justify-center py-20">
             <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>

@@ -1,6 +1,6 @@
 <template>
-    <div class="flex flex-col gap-4">
-        <SchoolCard :schoolName="props.schoolName" :schools="props.schools" @schoolChange="handleSchoolChange" />
+    <div class="flex flex-col gap-4 overflow-visible">
+        <SchoolCard :schoolName="localSchoolName" :schools="props.schools" @schoolChange="handleSchoolChange" />
         <FileImport @next="handleNext" @noFile="handleNoFile" />
     </div>
 </template>
@@ -23,7 +23,14 @@ type Emits = {
 const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
 
+const localSchoolName = ref(props.schoolName)
+
+watch(() => props.schoolName, (newValue) => {
+    localSchoolName.value = newValue
+})
+
 const handleSchoolChange = (newSchoolName: string) => {
+    localSchoolName.value = newSchoolName
     console.log('School changed:', newSchoolName)
 }
 

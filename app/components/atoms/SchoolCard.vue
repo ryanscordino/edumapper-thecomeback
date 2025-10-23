@@ -1,5 +1,6 @@
 <template>
-  <div class="w-full border rounded-xl p-5 gap-6 bg-linear-to-r from-[#FF7342] to-[#B176FF] text-white relative">
+  <div
+    class="w-full border rounded-xl p-5 gap-6 bg-linear-to-r from-[#FF7342] to-[#B176FF] text-white relative overflow-visible">
     <div class="flex flex-col gap-4 lg:flex-row justify-between items-start transition-all">
       <div class="flex flex-col gap-2">
         <h2 class="text-2xl text-left font-semibold">{{ props.schoolName }}</h2>
@@ -19,7 +20,7 @@
     </div>
     <Transition name="popover">
       <div v-if="isEditing" id="school-popover" tabindex="-1"
-        class="absolute right-0 mt-2 w-80 bg-white border rounded shadow z-50">
+        class="absolute right-0 mt-2 w-80 bg-white border rounded shadow z-[100]">
         <div class="p-3">
           <div class="text-sm font-medium mb-2 text-gray-900">Choisir un lycée</div>
           <div class="max-h-64 overflow-auto">
