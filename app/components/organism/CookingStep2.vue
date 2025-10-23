@@ -1,10 +1,21 @@
 <template>
     <div class="flex flex-col gap-4">
-        <h2 class="text-2xl font-bold">Step 2</h2>
-        <p>You have completed step 1!</p>
+        <SchoolCard :schoolName="props.schoolName" :schools="props.schools" @schoolChange="handleSchoolChange" />
     </div>
 </template>
 
 <script setup lang="ts">
-// Step 2 content
+import SchoolCard from '../atoms/SchoolCard.vue';
+
+type Props = {
+    schoolName: string,
+    taskDone: boolean,
+    schools: string[],
+}
+
+const props = defineProps<Props>()
+
+const handleSchoolChange = (newSchoolName: string) => {
+    console.log('School changed:', newSchoolName)
+}
 </script>
