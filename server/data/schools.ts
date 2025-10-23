@@ -20,4 +20,4 @@ export const schools = [
   "Lycée privé Saint-Michel de Picpus",
 ];
 
-export type Schools = string[];
+export type SchoolsType = string[];
