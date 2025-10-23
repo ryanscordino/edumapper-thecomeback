@@ -2,6 +2,7 @@
 import Header from './components/atoms/Hearder.vue';
 import CookingStep1 from './components/organism/CookingStep1.vue';
 import CookingStep2 from './components/organism/CookingStep2.vue';
+import CookingStep3 from './components/organism/CookingStep3.vue';
 
 const { data: school, pending: schoolPending } = await useFetch('/api/school');
 const { data: classes } = await useFetch('/api/classe');
@@ -34,12 +35,23 @@ const stepData = ref<{
 
 const showStep1 = ref(true)
 const showStep2 = ref(false)
+const showStep3 = ref(false)
 
 const handleStepComplete = (data: { schoolName: string, classLevel: string | null, bacType: string | null, speciality: string | null }) => {
   stepData.value = data
   console.log('Step data collected:', stepData.value)
   showStep1.value = false
   showStep2.value = true
+}
+
+const handleStep2Next = () => {
+  showStep2.value = false
+  showStep3.value = true
+}
+
+const handleStep2NoFile = () => {
+  showStep2.value = false
+  showStep3.value = true
 }
 
 const handleSchoolEdit = () => {
@@ -53,7 +65,7 @@ const handleSchoolChange = (newSchoolName: string) => {
 
 <template>
   <UApp>
-    <div>
+    <div class="min-h-screen">
       <Header />
       <main class="max-w-3xl mx-auto px-4 text-center">
         <div v-if="schoolPending || !isRandomSchoolSet" class="flex items-center justify-center py-20">
@@ -67,7 +79,8 @@ const handleSchoolChange = (newSchoolName: string) => {
           <p>Veuillez réessayer plus tard</p>
         </div>
         <CookingStep2 v-if="showStep2" :schoolName="stepData?.schoolName || ''" :taskDone="false"
-          :schools="school?.data || []" />
+          :schools="school?.data || []" @next="handleStep2Next" @noFile="handleStep2NoFile" />
+        <CookingStep3 v-if="showStep3" />
       </main>
     </div>
   </UApp>
